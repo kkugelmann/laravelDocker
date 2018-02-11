@@ -1,0 +1,35 @@
+version: '2'
+services:
+    web:
+        build:
+            context: ./
+            dockerfile: docker/web.docker
+        volumes:
+            - ./:/var/www
+        ports:
+            - "8080:80"
+        links:
+            - app
+    app:
+        build:
+            context: ./
+            dockerfile: docker/app.docker
+        volumes:
+            - ./:/var/www
+        links:
+            - database
+        environment:
+            - "DB_PORT=${DB_PORT}"
+            - "DB_HOST=database"
+    database:
+        image: mysql:5.7
+        environment:
+            - "MYSQL_ROOT_PASSWORD=${DB_PASSWORD}"
+            - "MYSQL_DATABASE=${DB_DATABASE}"
+            - "MYSQL_USER=${DB_USERNAME}"
+            - "MYSQL_PASSWORD=${DB_PASSWORD}"
+        ports:
+            - "33061:3306"
+        volumes:
+            - ./docker/database/data:/var/lib/mysql:rw
+            - ./docker/database/app.sql:/docker-entrypoint-initdb.d/schema.sql:ro

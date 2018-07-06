@@ -6,17 +6,17 @@
 ## Installation Instrucktions
 ### 1. Add as git submodule
 In your document root run:
-```
+```shell
 $ git submodule add git://github.com/kkugelmann/laravelDocker.git docker
 ```
 
 ### 2. Link the docker compose
-```
+```shell
 $ ln -s laravelDocker/docker-compose.yml
 ```
 
 ### 3. Run docker
-```
+```shell
 $ docker-compose up -d
 ```
 
